@@ -15,7 +15,7 @@ $packageArgs = @{
 
 Install-ChocolateyZipPackage @packageArgs
 
-$extractedDir = Get-ChildItem -Path $toolsDir | Where-Object { $_.PSIsContainer } | Select-Object -First 1
+$extractedDir = Get-ChildItem -Path $unzipLocation | Where-Object { $_.PSIsContainer } | Select-Object -First 1
 
 if (-not $extractedDir) {
     throw "Failed to find the extracted directory."
