@@ -23,8 +23,8 @@ if (-not $extractedDir) {
 $scalaBinPath = Join-Path $extractedDir | Join-Path -ChildPath 'bin' # Update this path if the structure inside the ZIP changes
 
 # Iterate through the .bat files in the bin directory and create shims
-Write-Host "Creating shims for .bat file"
-Get-ChildItem -Path $(Join-Path $unzipLocation $extractedDir | Join-Path -ChildPath 'bin') -Filter '*.bat' | ForEach-Object {
+Write-Host "Creating shims for .bat file from $scalaBinPath"
+Get-ChildItem -Path $scalaBinPath -Filter '*.bat' | ForEach-Object {
     $file = $_.FullName
     Write-Host "Creating shim for $file..."
     Install-BinFile -Name $_.BaseName -Path $file
