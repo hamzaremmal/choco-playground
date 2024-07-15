@@ -58,5 +58,5 @@ jobs:
         run  : choco install scala --source "${{ env.CHOCOLATEY-REPOSITORY }}" --pre # --pre since we might be testing non-stable releases
         shell: pwsh
       - name : Test the scala command
-        run  : scala --version
+        run  : scala-cli --version
         shell: pwsh
