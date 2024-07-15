@@ -16,11 +16,6 @@ env:
   CHOCOLATEY-REPOSITORY: chocolatey-pkgs
 
 jobs:
-  s:
-      runs-on: windows-latest
-      steps:
-         - run: choco install ninja
-         - run: ninja --version
   build:
     runs-on: windows-latest
     steps:
@@ -57,6 +52,12 @@ jobs:
       - name : Install the `scala` package with Chocolatey
         run  : choco install scala --source "${{ env.CHOCOLATEY-REPOSITORY }}" --pre # --pre since we might be testing non-stable releases
         shell: pwsh
-      - name : Test the scala command
-        run  : scala-cli --version
+      - name : Test the `scala` command
+        run  : scala --version
         shell: pwsh
+      - name : Test the `scalac` command
+        run  : scalac --version
+      - name : Test the `scaladoc` command
+        run  : scaladoc --version
+      - name : Test the `scala-cli` command
+        run  : scala-cli --version
