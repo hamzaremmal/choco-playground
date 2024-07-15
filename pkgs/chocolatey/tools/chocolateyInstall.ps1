@@ -15,10 +15,14 @@ $packageArgs = @{
 
 Install-ChocolateyZipPackage @packageArgs
 
-Get-ChildItem -Path $unzipLocation -Recurse
+$extractedDir = Get-ChildItem -Path $toolsDir | Where-Object { $_.PSIsContainer } | Select-Object -First 1
+
+if (-not $extractedDir) {
+    throw "Failed to find the extracted directory."
+}
 
 # Define the bin path
-$scalaBinPath = Join-Path $unzipLocation 'scala3' | Join-Path -ChildPath 'bin' # Update this path if the structure inside the ZIP changes
+$scalaBinPath = Join-Path $unzipLocation $extractedDir | Join-Path -ChildPath 'bin' # Update this path if the structure inside the ZIP changes
 
 # Iterate through the .bat files in the bin directory and create shims
 Write-Host "Creating shims for .bat files in $scalaBinPath..."
