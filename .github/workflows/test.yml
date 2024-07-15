@@ -12,6 +12,9 @@ name: Build 'scala' Chocolatey Package
 on:
   push:
 
+env:
+  CHOCOLATEY-REPOSITORY: chocolatey-pkgs
+
 jobs:
   build:
     runs-on: windows-latest
@@ -37,3 +40,18 @@ jobs:
           name: scala.nupkg
           path: ./pkgs/chocolatey/scala.*.nupkg
           if-no-files-found: error
+  test:
+    runs-on: windows-latest
+    needs: build
+    steps:
+      - name: Download the 'nupkg' from GitHub Artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: scala.nupkg
+          path: ${{ env.CHOCOLATEY-REPOSITORY }}
+      - name : Install the `scala` package with Chocolatey
+        run  : choco install scala --source "${{ env.CHOCOLATEY-REPOSITORY }}" --pre # --pre since we might be testing non-stable releases
+        shell: pwsh
+      - name : Test the scala command
+        run  : scala --version
+        shell: pwsh
