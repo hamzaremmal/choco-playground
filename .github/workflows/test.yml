@@ -61,3 +61,5 @@ jobs:
         run  : scaladoc --version
       - name : Test the `scala-cli` command
         run  : scala-cli --version
+      - name : Uninstalling the `scala` package$
+        run  : choco uninstall scala
