@@ -19,8 +19,8 @@ jobs:
   s:
       runs-on: windows-latest
       steps:
-         - run: choco install scala
-         - run: scala --version
+         - run: choco install ninja
+         - run: ninja --version
   build:
     runs-on: windows-latest
     steps:
