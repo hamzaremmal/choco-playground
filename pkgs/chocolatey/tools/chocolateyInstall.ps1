@@ -1,15 +1,21 @@
 $ErrorActionPreference = 'Stop';
 
+$unzipLocation = Split-Path -Parent $MyInvocation.MyCommand.Definition        # Get the root of chocolatey folder
+$unzipLocation = Join-Path $unzipLocation "$($env:chocolateyPackageName)"     # Append the package's name
+$unzipLocation = Join-Path $unzipLocation "$($env:chocolateyPackageVersion)"  # Append the package's version
+
+
 $unzipLocation = Split-Path -Parent $MyInvocation.MyCommand.Definition
 
 $packageArgs = @{
   packageName   = 'scala'
   Url64         = 'https://github.com/scala/scala3/releases/download/3.5.0-RC3/scala3-3.5.0-RC3-x86_64-pc-win32.zip'
   UnzipLocation = $unzipLocation
-  SpecificFolder = 'scala3'
 }
 
 Install-ChocolateyZipPackage @packageArgs
+
+Get-ChildItem -Path $unzipLocation -Recurse
 
 # Define the bin path
 $scalaBinPath = Join-Path $unzipLocation 'scala3' | Join-Path -ChildPath 'bin' # Update this path if the structure inside the ZIP changes
