@@ -4,9 +4,7 @@ $unzipLocation = Split-Path -Parent $MyInvocation.MyCommand.Definition        #Â
 $unzipLocation = Join-Path $unzipLocation "$($env:chocolateyPackageName)"     # Append the package's name
 $unzipLocation = Join-Path $unzipLocation "$($env:chocolateyPackageVersion)"  # Append the package's version
 
-
-$unzipLocation = Split-Path -Parent $MyInvocation.MyCommand.Definition
-
+#Â Configure the installation arguments
 $packageArgs = @{
   packageName   = 'scala'
   Url64         = 'https://github.com/scala/scala3/releases/download/3.5.0-RC3/scala3-3.5.0-RC3-x86_64-pc-win32.zip'
@@ -25,8 +23,8 @@ if (-not $extractedDir) {
 $scalaBinPath = Join-Path $unzipLocation $extractedDir | Join-Path -ChildPath 'bin' # Update this path if the structure inside the ZIP changes
 
 # Iterate through the .bat files in the bin directory and create shims
-Write-Host "Creating shims for .bat files in $scalaBinPath..."
-Get-ChildItem -Path $scalaBinPath -Filter '*.bat' | ForEach-Object {
+Write-Host "Creating shims for .bat file"
+Get-ChildItem -Path $(Join-Path $unzipLocation $extractedDir | Join-Path -ChildPath 'bin') -Filter '*.bat' | ForEach-Object {
     $file = $_.FullName
     Write-Host "Creating shim for $file..."
     Install-BinFile -Name $_.BaseName -Path $file
