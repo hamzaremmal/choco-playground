@@ -10,7 +10,9 @@ $packageArgs = @{
   UnzipLocation = $unzipLocation
 }
 
-Install-ChocolateyZipPackage @packageArgs
+$result = Install-ChocolateyZipPackage @packageArgs
+
+Write-Host "result = $result"
 
 # Define the bin path
 $scalaBinPath = Join-Path $unzipLocation 'scala3-3.5.0-RC3-x86_64-pc-win32' | Join-Path -ChildPath 'bin' # Update this path if the structure inside the ZIP changes
