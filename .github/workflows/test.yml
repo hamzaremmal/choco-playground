@@ -30,7 +30,7 @@ jobs:
           search-text: '@LAUNCHER_URL@'
           replacement-text: https://chara.epfl.ch/~remmal/scala.msi
       - name: Build the Chocolatey package (.nupkg)
-        run: choco --pack ./pkgs/chocolatey/scala.nuspec --out ./pkgs/chocolatey
+        run: choco pack ./pkgs/chocolatey/scala.nuspec --out ./pkgs/chocolatey
       - name: Upload the Chocolatey package to GitHub
         uses: actions/upload-artifact@v4
         with:
