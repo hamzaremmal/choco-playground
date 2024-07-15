@@ -20,7 +20,7 @@ if (-not $extractedDir) {
 }
 
 # Define the bin path
-$scalaBinPath = Join-Path $unzipLocation $extractedDir | Join-Path -ChildPath 'bin' # Update this path if the structure inside the ZIP changes
+$scalaBinPath = Join-Path $extractedDir | Join-Path -ChildPath 'bin' # Update this path if the structure inside the ZIP changes
 
 # Iterate through the .bat files in the bin directory and create shims
 Write-Host "Creating shims for .bat file"
